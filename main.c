@@ -97,6 +97,8 @@ void main(void)
     init_buzzer(50);     /// Volume: 50 %
     init_scia_fifo();
 
+    enable_pwm_tbclk();
+
     /* Enable global interrupts (EINT) */
     EINT;
     ERTM;
