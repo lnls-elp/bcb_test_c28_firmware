@@ -5,8 +5,8 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="${build_artifact:C28_V2.1}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="C28_V2.1"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:C28_V2.1}"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="C:/Users\gabriel.brunheira\lnls-elp\C28\FLASH_UDC_V2_1\C28_V2.1.out"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/Cortex_M3_0" value="/home/allefpablo/lnls-elp/ARM/FLASH_UDC_V2_1/M3_V2.0.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="C:/Users\allef.silva\lnls-elp\bcb_test_c28_firmware\FLASH_UDC_V2_1\C28_V2.1.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/Cortex_M3_0" value="C:/Users\allef.silva\lnls-elp\bcb_test_arm_firmware\FLASH_UDC_V2_1\bcb_test_arm_firmware.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/C28_V2.1"/>
 </listAttribute>

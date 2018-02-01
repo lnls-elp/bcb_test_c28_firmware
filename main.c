@@ -105,6 +105,7 @@ void main(void)
 
     while(1)
     {
+        main_fbp();
     }
 }
 
@@ -176,23 +177,22 @@ static void init_scia_fifo(void)
 
 interrupt void isr_scia_rx_fifo(void)
 {
+
+    #if UDC_SELECT
     scia_rx_data[0] = SciaRegs.SCIRXBUF.all;
-    //scia_rx_data[1] = SciaRegs.SCIRXBUF.all;
 
-    GpioDataRegs.GPDSET.bit.GPIO117 = 1;
-
-    SciaRegs.SCITXBUF = scia_rx_data[0];
-    //SciaRegs.SCITXBUF = scia_rx_data[1];
-
-    //while(SciaRegs.SCICTL2.bit.TXEMPTY==0);
-    DELAY_US(1000);
-
-    GpioDataRegs.GPDCLEAR.bit.GPIO117 = 1;
-
+    g_ipc_ctom.ps_module[0].ps_status.all = scia_rx_data[0];
     //
     // Clear Interrupt flag
     // Issue PIE acknowledge to enable more interrupts from this group
     SciaRegs.SCIFFRX.bit.RXFFINTCLR=1;
     PieCtrlRegs.PIEACK.all |= M_INT9;
+    #else
+    //
+    // Clear Interrupt flag
+    // Issue PIE acknowledge to enable more interrupts from this group
+    SciaRegs.SCIFFRX.bit.RXFFINTCLR=1;
+    PieCtrlRegs.PIEACK.all |= M_INT9;
+    #endif
 }
 

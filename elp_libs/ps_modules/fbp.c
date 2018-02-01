@@ -32,7 +32,7 @@
  *
  * TODO: transfer this to param bank
  */
-#define USE_ITLK                1
+#define USE_ITLK                0
 #define TIMEOUT_DCLINK_RELAY    100000
 
 #define PWM_FREQ                50000.0     // PWM frequency [Hz]
@@ -259,19 +259,19 @@ void main_fbp(void)
     /// TODO: include condition for re-initialization
     while(1)
     {
-        for(i = 0; i < NUM_MAX_PS_MODULES; i++)
-        {
-            if(g_ipc_ctom.ps_module[i].ps_status.bit.active)
-            {
-                check_interlocks_ps_module(i);
-            }
-        }
+        //for(i = 0; i < NUM_MAX_PS_MODULES; i++)
+        //{
+        //    if(g_ipc_ctom.ps_module[i].ps_status.bit.active)
+        //    {
+        //        check_interlocks_ps_module(i);
+        //    }
+        //}
     }
 
-    for(i = 0; i < NUM_MAX_PS_MODULES; i++)
-    {
-        turn_off(i);
-    }
+    //for(i = 0; i < NUM_MAX_PS_MODULES; i++)
+    //{
+    //    turn_off(i);
+    //}
 
     disable_controller();
     term_interruptions();
@@ -299,7 +299,7 @@ static void init_peripherals_drivers(uint16_t num_ps)
     send_ipc_lowpriority_msg(0,Enable_HRADC_Boards);
     DELAY_US(2000000);
 
-    for(i = 0; i < num_ps; i++)
+    /*for(i = 0; i < num_ps; i++)
     {
         Init_HRADC_Info(&HRADCs_Info.HRADC_boards[i], i, DECIMATION_FACTOR,
                         buffers_HRADC[i], TRANSDUCER_GAIN);
@@ -309,7 +309,7 @@ static void init_peripherals_drivers(uint16_t num_ps)
 
     HRADCs_Info.n_HRADC_boards = num_ps;
 
-    Config_HRADC_SoC(HRADC_FREQ_SAMP);
+    Config_HRADC_SoC(HRADC_FREQ_SAMP);*/
 
     /* Initialization of PWM modules */
     g_pwm_modules.num_modules = 8;
@@ -380,12 +380,12 @@ static uint16_t init_controller(void)
 
     num_ps = 0;
 
-    for(i = 0; i < NUM_MAX_PS_MODULES; i++)
-    {
-        if(g_ipc_mtoc.ps_module[i].ps_status.bit.active)
-        {
-            init_ps_module(&g_ipc_ctom.ps_module[i],
-                           g_ipc_mtoc.ps_module[i].ps_status.bit.model,
+    //for(i = 0; i < NUM_MAX_PS_MODULES; i++)
+    //{
+        //if(g_ipc_mtoc.ps_module[i].ps_status.bit.active)
+        //{
+            init_ps_module(&g_ipc_ctom.ps_module[0],
+                           g_ipc_mtoc.ps_module[0].ps_status.bit.model,
                            &turn_on, &turn_off, &isr_soft_interlock,
                            &isr_hard_interlock, &reset_interlocks);
 
@@ -393,9 +393,9 @@ static uint16_t init_controller(void)
              * TODO: initialize SigGen, WfmRef and Samples Buffer
              */
 
-            num_ps = i;
-        }
-    }
+            //num_ps = i;
+        //}
+    //}
 
     num_ps++;
 
@@ -780,8 +780,8 @@ static void init_interruptions(void)
     PieCtrlRegs.PIEIER3.bit.INTx1 = 1;  // ePWM1
     PieCtrlRegs.PIEIER3.bit.INTx2 = 1;  // ePWM2
 
-    enable_pwm_interrupt(PS4_PWM_MODULATOR);
-    enable_pwm_interrupt(PS4_PWM_MODULATOR_NEG);
+    //enable_pwm_interrupt(PS4_PWM_MODULATOR);
+    //enable_pwm_interrupt(PS4_PWM_MODULATOR_NEG);
 
     IER |= M_INT1;
     IER |= M_INT3;
@@ -811,48 +811,21 @@ static void term_interruptions(void)
     PieCtrlRegs.PIEACK.all |= M_INT1 | M_INT3 | M_INT11;
 }
 
+
 static void turn_on(uint16_t id)
 {
-    if(g_ipc_ctom.ps_module[id].ps_status.bit.active)
-    {
-        if(g_ipc_ctom.ps_module[id].ps_status.bit.state == Off)
-        {
-            reset_controller(id);
-            close_relay(id);
-
-            DELAY_US(TIMEOUT_DCLINK_RELAY);
-
-            #ifdef USE_ITLK
-            if(!get_relay_status(id))
-            {
-                set_hard_interlock(id,DCLINK_RELAY_FAIL);
-            }
-            else
-            #endif
-            {
-                g_ipc_ctom.ps_module[id].ps_status.bit.openloop = OPEN_LOOP;
-                g_ipc_ctom.ps_module[id].ps_status.bit.state = SlowRef;
-
-                enable_pwm_output(2*id);
-                enable_pwm_output((2*id)+1);
-            }
-        }
-    }
+    GpioDataRegs.GPDSET.bit.GPIO117 = 1;
+    SciaRegs.SCITXBUF = 0xAA;
+    DELAY_US(1000);
+    GpioDataRegs.GPDCLEAR.bit.GPIO117 = 1;
 }
+
 
 static void turn_off(uint16_t id)
 {
-    disable_pwm_output(2*id);
-    disable_pwm_output((2*id)+1);
-
-    open_relay(id);
-
-    g_ipc_ctom.ps_module[id].ps_status.bit.openloop = OPEN_LOOP;
-    if (g_ipc_ctom.ps_module[id].ps_status.bit.state != Interlock){
-        g_ipc_ctom.ps_module[id].ps_status.bit.state = Off;
-    }
-    reset_controller(id);
+    g_ipc_ctom.ps_module[0].ps_status.all = 0;
 }
+
 
 static void reset_interlocks(void)
 {
@@ -877,6 +850,7 @@ static void set_hard_interlock(uint16_t id, uint32_t itlk)
         g_ipc_ctom.ps_module[id].ps_status.bit.state = Interlock;
     }
 }
+
 
 static void set_soft_interlock(uint16_t id, uint32_t itlk)
 {
