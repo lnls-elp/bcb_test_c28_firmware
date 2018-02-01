@@ -30,7 +30,7 @@
 
 #define SCI_FREQ        3125000
 #define LSPCLK_FREQ     C28_FREQ_MHZ*1e6/(LSPCLK_DV+1)
-#define SCI_BAUD         (LSPCLK_FREQ/(SCI_FREQ*8))-1
+#define SCI_BAUD        (LSPCLK_FREQ/(SCI_FREQ*8))-1
 
 uint16_t scia_rx_data[2];
 

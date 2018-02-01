@@ -18,7 +18,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="${build_artifact:C28_V2.0}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="C28_V2.0"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:C28_V2.0}"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="D:/ARQ\Projects\C28\C28 Project\FLASH_UDC_V2_0\C28_V2.0.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/C28xx_0" value="C:/Users\gabriel.brunheira\lnls-elp\C28\C28 Project\FLASH_UDC_V2_0\C28_V2.0.out"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/Cortex_M3_0" value="C:/Users\gabriel.brunheira\git\ARM\FLASH_UDC_V2_0\M3_V2.0.out"/>
 <mapAttribute key="com.ti.ccstudio.debug.ui.displayFormats">
 <mapEntry key="Texas Instruments XDS100v2 USB Debug Probe/C28xx_0@##separator##@1" value="16-Bit Hex - TI Style"/>
