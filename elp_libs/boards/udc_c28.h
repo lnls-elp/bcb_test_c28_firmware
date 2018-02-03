@@ -29,7 +29,7 @@
 
 #include "DSP28x_Project.h"
 
-#define UDC_SELECT      0
+#define UDC_SELECT      1
 
 /**
  * Select DRS boards version
